@@ -1,0 +1,23 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: greeting
+spec:
+  schedule: ""
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 1 
+  concurrencyPolicy: "Replace"
+  startingDeadlineSeconds: 200
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          labels:
+            app: "argocd-cronjob-example"
+        spec:
+          containers:
+          - name: main
+            image: alpine:latest
+            command: ["echo"]
+            args: ["This is template."]
+          restartPolicy: "Never"
